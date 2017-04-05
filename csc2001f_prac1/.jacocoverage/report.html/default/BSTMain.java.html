@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BSTMain.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;csc2001f_prac1&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">BSTMain.java</span></div><h1>BSTMain.java</h1><pre class="source lang-java linenums">
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+/**
+ * Main method takes in two sets of comma-separated integers from the command
+ * line and creates appropriate Binary Search Trees from the values. Each tree
+ * is then printed to the console as a textual representation and to two
+ * separate .out files.
+ *
+ * The trees are inspected to see whether they have similar tree structures and
+ * an appropriate message is printed.
+ *
+ * @author Aidan de Nobrega - DNBAID001
+ * @since 01/03/2015
+ * @see SimpleBST
+ * @see SimpleTreeWriterImpl
+ * @see TreeUtils
+ */
+<span class="nc" id="L22">public class BSTMain</span>
+{
+    public static void main(String args[]) throws FileNotFoundException
+    {
+<span class="nc" id="L26">        System.out.print(&quot;Enter a comma separated sequence of node values: &quot;);</span>
+<span class="nc" id="L27">        Scanner scan1 = new Scanner(System.in);</span>
+        //Comma is used as delimiter for Scanner
+<span class="nc" id="L29">        scan1 = new Scanner(scan1.nextLine()).useDelimiter(&quot;\\s*,\\s*&quot;);</span>
+
+        //First input is converted to Binary Search Tree
+<span class="nc" id="L32">        SimpleBST T1 = new SimpleBST();</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        while (scan1.hasNextInt())</span>
+        {
+<span class="nc" id="L36">            T1.insert(scan1.nextInt());</span>
+        }
+
+<span class="nc" id="L39">        System.out.print(&quot;Enter a comma separated sequence of node values: &quot;);</span>
+<span class="nc" id="L40">        Scanner scan2 = new Scanner(System.in);</span>
+<span class="nc" id="L41">        scan2 = new Scanner(scan2.nextLine()).useDelimiter(&quot;\\s*,\\s*&quot;);</span>
+
+        //Second input is converted to Binary Search Tree
+<span class="nc" id="L44">        SimpleBST T2 = new SimpleBST();</span>
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        while (scan2.hasNextInt())</span>
+        {
+<span class="nc" id="L48">            T2.insert(scan2.nextInt());</span>
+        }
+
+        //Trees are printed to console
+<span class="nc" id="L52">        System.out.println(&quot;Tree One: &quot;);</span>
+<span class="nc" id="L53">        SimpleBST.print(T1, new SimpleTreeWriterImpl(System.out));</span>
+<span class="nc" id="L54">        System.out.println(&quot;Tree Two: &quot;);</span>
+<span class="nc" id="L55">        SimpleBST.print(T2, new SimpleTreeWriterImpl(System.out));</span>
+
+        //Tree structures are checked for similarity and the appropriate message
+        //is printed
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (T1.similar(T2))</span>
+        {
+<span class="nc" id="L61">            System.out.println(&quot;The trees are similar.&quot;);</span>
+        }
+        else
+        {
+<span class="nc" id="L65">            System.out.println(&quot;The trees are not similar.&quot;);</span>
+        }
+
+        //Textual representations of trees are printed in separate .out files
+<span class="nc" id="L69">        SimpleBST.print(T1, new SimpleTreeWriterImpl(new PrintStream(new File(&quot;T1.out&quot;))));</span>
+<span class="nc" id="L70">        SimpleBST.print(T1, new SimpleTreeWriterImpl(new PrintStream(new File(&quot;T2.out&quot;))));</span>
+<span class="nc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>

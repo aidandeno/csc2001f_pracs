@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TreeUtils.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;csc2001f_prac1&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">TreeUtils.java</span></div><h1>TreeUtils.java</h1><pre class="source lang-java linenums">
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class of utilities that can be used on Binary Search Trees.
+ *
+ * Includes a method to check whether an element is empty or not, a method to
+ * create a list of the root node in a tree, a method for inputting an level on
+ * a tree and outputting the next level, and a method for checking whether two
+ * trees have similar structures.
+ *
+ * @author Aidan de Nobrega - DNBAID001
+ * @since 01/03/2015
+ * @see BinaryTreeNode
+ */
+<span class="nc" id="L17">public class TreeUtils</span>
+{
+    /**
+     * Determine whether node is a place holder i.e.
+     * &lt;code&gt;node==BinaryTreeNode.EMPTY_NODE&lt;/code&gt;
+     *
+     * @param node an element of a Binary Search Tree.
+     * @return true if node is placeholder and false otherwise.
+     */
+    public static boolean isPlaceHolder(BinaryTreeNode node)
+    {
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        return node == BinaryTreeNode.EMPTY_NODE;</span>
+    }
+
+    /**
+     * Creates a single-element list containing a Binary Search Tree's root
+     * node.
+     *
+     * @param tNode root node of Binary Search Tree
+     * @return single-element list containing a Binary Search Tree's root node.
+     */
+    public static List&lt;BinaryTreeNode&gt; levelZero(BinaryTreeNode tNode)
+    {
+<span class="nc" id="L40">        ArrayList&lt;BinaryTreeNode&gt; rootList = new ArrayList&lt;BinaryTreeNode&gt;();</span>
+
+<span class="nc" id="L42">        rootList.add(tNode);</span>
+
+<span class="nc" id="L44">        return rootList;</span>
+    }
+
+    /**
+     * Given a list of nodes, obtain the next level. If the tree structure is
+     * incomplete, BinaryTreeNode.EMPTY_NODE is inserted as a place holder for
+     * each missing node.
+     *
+     * @param level list of nodes at a specific level
+     * @return list of nodes in the next level
+     */
+    public static List&lt;BinaryTreeNode&gt; nextLevel(List&lt;BinaryTreeNode&gt; level)
+    {
+<span class="nc" id="L57">        ArrayList&lt;BinaryTreeNode&gt; nextLevelList = new ArrayList&lt;BinaryTreeNode&gt;();</span>
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        for (BinaryTreeNode element : level)</span>
+        {
+            //Adds left node (or placeholder) to list.
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (element.hasLeft())</span>
+            {
+<span class="nc" id="L64">                nextLevelList.add(element.getLeft());</span>
+            }
+            else
+            {
+<span class="nc" id="L68">                nextLevelList.add(BinaryTreeNode.EMPTY_NODE);</span>
+            }
+            //Adds right node (or placeholder) to list.
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (element.hasRight())</span>
+            {
+<span class="nc" id="L73">                nextLevelList.add(element.getRight());</span>
+            }
+            else
+            {
+<span class="nc" id="L77">                nextLevelList.add(BinaryTreeNode.EMPTY_NODE);</span>
+            }
+<span class="nc" id="L79">        }</span>
+
+<span class="nc" id="L81">        return nextLevelList;</span>
+    }
+
+    @SuppressWarnings(&quot;null&quot;)
+    /**
+     * Determine whether one tree node structure is similar (has the same
+     * structure) to another.
+     *
+     * @param treeStructOne root of first tree
+     * @param treeStructTwo root of second tree
+     * @return true if trees are similar, false otherwise
+     */
+    public static boolean similar(BinaryTreeNode one, BinaryTreeNode two)
+    {
+        //empty trees are equal
+<span class="pc bpc" id="L96" title="3 of 4 branches missed.">        if (one == null &amp;&amp; two == null)</span>
+        {
+<span class="nc" id="L98">            return true;</span>
+        }
+
+        //empty tree is not equal to a non-empty one
+<span class="pc bpc" id="L102" title="5 of 8 branches missed.">        if ((one == null &amp;&amp; two != null)</span>
+                || (one != null &amp;&amp; two == null))
+        {
+<span class="nc" id="L105">            return false;</span>
+        }
+        
+        //if heights are not equal, don't even bother with the rest
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (one.getHeight() == two.getHeight())</span>
+        {
+            //recursive checking. upper-level conditional statements are to suppress
+            //asserts in getLeft() and getRight() methods.
+<span class="pc bpc" id="L113" title="2 of 8 branches missed.">            if (!one.hasLeft() &amp;&amp; !two.hasLeft() &amp;&amp; !one.hasRight() &amp;&amp; !two.hasRight())</span>
+            {
+<span class="fc" id="L115">                return true;</span>
+            }
+
+<span class="pc bpc" id="L118" title="2 of 8 branches missed.">            if (one.hasLeft() &amp;&amp; two.hasLeft() &amp;&amp; one.hasRight() &amp;&amp; two.hasRight())</span>
+            {
+<span class="pc bpc" id="L120" title="2 of 4 branches missed.">                return similar(one.getLeft(), two.getLeft())</span>
+                        &amp;&amp; similar(one.getRight(), two.getRight());
+            }
+            
+<span class="pc bpc" id="L124" title="3 of 8 branches missed.">            if ((one.hasLeft() &amp;&amp; two.hasLeft()) &amp;&amp; (!one.hasRight() &amp;&amp; !two.hasRight()))</span>
+            {
+<span class="fc" id="L126">                return similar(one.getLeft(), two.getLeft());</span>
+            }
+            
+<span class="pc bpc" id="L129" title="4 of 8 branches missed.">            if ((!one.hasLeft() &amp;&amp; !two.hasLeft()) &amp;&amp; (one.hasRight() &amp;&amp; two.hasRight()))</span>
+            {
+<span class="fc" id="L131">                return similar(one.getRight(), two.getRight());</span>
+            }
+            //if none of the above conditions are met
+<span class="nc" id="L134">            return false;</span>
+        }
+        //heights are different
+<span class="fc" id="L137">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>

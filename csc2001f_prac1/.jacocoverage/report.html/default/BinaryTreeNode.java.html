@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BinaryTreeNode.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;csc2001f_prac1&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">BinaryTreeNode.java</span></div><h1>BinaryTreeNode.java</h1><pre class="source lang-java linenums">
+/**
+ * Simple binary tree node for integer values.
+ *
+ * @author Stephan Jamieson
+ * @version 24/2/2015
+ */
+<span class="pc bpc" id="L8" title="1 of 2 branches missed.">public class BinaryTreeNode</span>
+{
+
+    private Integer item;
+    private BinaryTreeNode left;
+    private BinaryTreeNode right;
+
+    /**
+     * Convenience object for use as place holder in printing.
+     */
+<span class="fc" id="L18">    public static BinaryTreeNode EMPTY_NODE = new BinaryTreeNode();</span>
+
+    private BinaryTreeNode()
+<span class="fc" id="L21">    {</span>
+<span class="fc" id="L22">        this.left = null;</span>
+<span class="fc" id="L23">        this.item = null;</span>
+<span class="fc" id="L24">        this.right = null;</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Create a node containing the given item.
+     */
+    public BinaryTreeNode(Integer item)
+    {
+<span class="fc" id="L32">        this(null, item, null);</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Create a node containing the given item and left and right sub trees.
+     */
+    private BinaryTreeNode(BinaryTreeNode left, Integer item, BinaryTreeNode right)
+<span class="fc" id="L39">    {</span>
+<span class="pc bpc" id="L40" title="2 of 4 branches missed.">        assert (item != null);</span>
+<span class="fc" id="L41">        this.left = left;</span>
+<span class="fc" id="L42">        this.item = item;</span>
+<span class="fc" id="L43">        this.right = right;</span>
+<span class="fc" id="L44">    }</span>
+
+    /* Low level structural operations */
+    /**
+     * Determine whether this node has a left branch.
+     */
+    public boolean hasLeft()
+    {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        return left != null;</span>
+    }
+
+    /**
+     * Determine whether this node has a right branch.
+     */
+    public boolean hasRight()
+    {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        return right != null;</span>
+    }
+
+    /**
+     * Obtain the value stored in this node.
+     */
+    public Integer getItem()
+    {
+<span class="fc" id="L68">        return item;</span>
+    }
+
+    /**
+     * Obtain this node's left branch. Requires that
+     * &lt;code&gt;this.hasLeft()&lt;/code&gt;.
+     */
+    public BinaryTreeNode getLeft()
+    {
+<span class="pc bpc" id="L77" title="2 of 4 branches missed.">        assert (this.hasLeft());</span>
+<span class="fc" id="L78">        return this.left;</span>
+    }
+
+    /**
+     * Obtain this node's right branch. Requires that
+     * &lt;code&gt;this.hasRight()&lt;/code&gt;.
+     */
+    public BinaryTreeNode getRight()
+    {
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">        assert (this.hasRight());</span>
+<span class="fc" id="L88">        return this.right;</span>
+    }
+
+    /**
+     * Set this node's left branch.
+     */
+    public void setLeft(BinaryTreeNode tree)
+    {
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">        assert (tree != EMPTY_NODE);</span>
+<span class="fc" id="L97">        this.left = tree;</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * Set this node's right branch.
+     */
+    public void setRight(BinaryTreeNode tree)
+    {
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">        assert (tree != EMPTY_NODE);</span>
+<span class="fc" id="L106">        this.right = tree;</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
+     * Obtain the height of this tree structure.
+     */
+    public Integer getHeight()
+    {
+<span class="fc bfc" id="L114" title="All 4 branches covered.">        if (this.hasLeft() &amp;&amp; this.hasRight())</span>
+        {
+<span class="fc" id="L116">            return Math.max(this.getLeft().getHeight(), this.getRight().getHeight()) + 1;</span>
+        }
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        else if (this.hasLeft())</span>
+        {
+<span class="fc" id="L120">            return this.getLeft().getHeight() + 1;</span>
+        }
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        else if (this.hasRight())</span>
+        {
+<span class="fc" id="L124">            return this.getRight().getHeight() + 1;</span>
+        }
+        else
+        {
+<span class="fc" id="L128">            return 1;</span>
+        }
+    }
+
+    /**
+     * Obtain the largest integer value stored in this tree structure.
+     */
+    public Integer getLargest()
+    {
+<span class="nc" id="L137">        Integer largest = this.getItem();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (this.hasLeft())</span>
+        {
+<span class="nc" id="L140">            largest = Math.max(largest, this.getLeft().getLargest());</span>
+        }
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (this.hasRight())</span>
+        {
+<span class="nc" id="L144">            largest = Math.max(largest, this.getRight().getLargest());</span>
+        }
+
+<span class="nc" id="L147">        return largest;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>

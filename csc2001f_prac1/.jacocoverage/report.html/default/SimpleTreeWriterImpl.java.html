@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SimpleTreeWriterImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;csc2001f_prac1&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">SimpleTreeWriterImpl.java</span></div><h1>SimpleTreeWriterImpl.java</h1><pre class="source lang-java linenums">
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * Prints textual representation of trees to an output designated by the
+ * constructor's argument.
+ *
+ * @author Aidan de Nobrega - DNBAID001
+ * @since 01/03/2015
+ * @see SimpleTreeWriter
+ * @see TreeUtils
+ * @see BinaryTreeNode
+ */
+public class SimpleTreeWriterImpl implements SimpleTreeWriter
+{
+    /**
+     * Output location of write() method is set when an object is instantiated.
+     */
+    PrintStream outputLocation;
+
+    /**
+     * Simple constructor.
+     *
+     * @param output Output location of write() method.
+     */
+    public SimpleTreeWriterImpl(PrintStream output)
+<span class="nc" id="L29">    {</span>
+<span class="nc" id="L30">        setDestination(output);</span>
+<span class="nc" id="L31">    }</span>
+
+    @Override
+    /**
+     * Used by constructor to set the destination of the write() method's
+     * output.
+     *
+     */
+    public final void setDestination(PrintStream stream)
+    {
+<span class="nc" id="L41">        this.outputLocation = new PrintStream(stream);</span>
+<span class="nc" id="L42">    }</span>
+
+    @Override
+    /**
+     * Creates and prints textual representation of a Binary Search Tree to a
+     * destination set at instantiation.
+     *
+     * @param tree Root node of Binary Search Tree to be printed.
+     */
+    public void write(BinaryTreeNode tree)
+    {
+        //height of tree for iteration
+<span class="nc" id="L54">        int height = 0;</span>
+        //for padding of output
+<span class="nc" id="L56">        int textWidth = 0;</span>
+        
+        //a single-element list containing the root node of the tree
+<span class="nc" id="L59">        ArrayList&lt;BinaryTreeNode&gt; levelList = (ArrayList&lt;BinaryTreeNode&gt;) TreeUtils.levelZero(tree);</span>
+        
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (tree != null)</span>
+        {
+<span class="nc" id="L63">            height = tree.getHeight();</span>
+            //all spacing and values have to be consistent according to the width
+            //of the largest value in the BST
+<span class="nc" id="L66">            textWidth = tree.getLargest().toString().length();</span>
+
+        }
+        //printing is done i times where i is the number of levels in the tree
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        for (int i = 0; i &lt; height; i++)</span>
+        {
+            //the number of spaces before the first value in each level
+<span class="nc" id="L73">            int initialSpaces = textWidth * (int) ((Math.pow(2, height - i) - 1) / 2);</span>
+            //the number of spaces between values on a level
+<span class="nc" id="L75">            int internalSpaces = textWidth * (int) (Math.pow(2, height - i) - 1);</span>
+
+            //initial spaces are printed
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            for (int j = 0; j &lt; initialSpaces; j++)</span>
+            {
+<span class="nc" id="L80">                outputLocation.print(&quot; &quot;);</span>
+            }
+
+            Iterator&lt;BinaryTreeNode&gt; it;
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            for (it = levelList.iterator(); it.hasNext();)</span>
+            {
+<span class="nc" id="L86">                BinaryTreeNode element = it.next();</span>
+
+                //if the element is a placeholder, whitespace is printed in order
+                //to maintain tree structure. Otherwise, the element itself is printed
+                //formatted to designated text width.
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                if (TreeUtils.isPlaceHolder(element))</span>
+                {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                    for (int j = 0; j &lt; textWidth; j++)</span>
+                    {
+<span class="nc" id="L95">                        outputLocation.print(&quot; &quot;);</span>
+                    }
+                }
+                else
+                {
+<span class="nc" id="L100">                    outputLocation.printf(&quot;%&quot; + textWidth + &quot;s&quot;, element.getItem());</span>
+                }
+
+                //if there are more elements in the list, internalSpaces are printed.
+                //Otherwise a new line is printed.
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                if (it.hasNext())</span>
+                {
+                    {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                        for (int j = 0; j &lt; internalSpaces; j++)</span>
+                        {
+<span class="nc" id="L110">                            outputLocation.print(&quot; &quot;);</span>
+                        }
+                    }
+                }
+                else
+                {
+<span class="nc" id="L116">                    outputLocation.println();</span>
+                    
+                    //everything from here in this 'else' clause is for printing
+                    //branches. The algo is very similar to the one above.
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                    for (int j = 0; j &lt; initialSpaces; j++)</span>
+                    {
+<span class="nc" id="L122">                        outputLocation.print(&quot; &quot;);</span>
+                    }
+
+                    Iterator&lt;BinaryTreeNode&gt; it2;
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                    for (it2 = levelList.iterator(); it2.hasNext();)</span>
+                    {
+<span class="nc" id="L128">                        BinaryTreeNode element2 = it2.next();</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                        if (TreeUtils.isPlaceHolder(element2))</span>
+                        {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                            for (int j = 0; j &lt; textWidth; j++)</span>
+                            {
+<span class="nc" id="L134">                                outputLocation.print(&quot; &quot;);</span>
+                            }
+                        }
+                        else //branches are printed here
+                        {
+<span class="nc bnc" id="L139" title="All 4 branches missed.">                            if (element2.hasLeft() &amp;&amp; element2.hasRight())</span>
+                            {
+<span class="nc" id="L141">                                outputLocation.printf(&quot;%-&quot; + textWidth + &quot;s&quot;, &quot;/ \\&quot;);</span>
+                            }
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                            else if (element2.hasLeft())</span>
+                            {
+<span class="nc" id="L145">                                outputLocation.printf(&quot;%-&quot; + textWidth + &quot;s&quot;, &quot;/ &quot;);</span>
+                            }
+<span class="nc bnc" id="L147" title="All 2 branches missed.">                            else if (element2.hasRight())</span>
+                            {
+<span class="nc" id="L149">                                outputLocation.printf(&quot;%&quot; + textWidth + &quot;s&quot;, &quot; \\&quot;);</span>
+                            }
+                            else
+                            {
+<span class="nc" id="L153">                                outputLocation.printf(&quot;%&quot; + textWidth + &quot;s&quot;, &quot; &quot;);</span>
+                            }
+                        }
+
+                        //if there are more elements in the list, internalSpaces are printed.
+                        //Otherwise a new line is printed.
+<span class="nc bnc" id="L159" title="All 2 branches missed.">                        if (it2.hasNext())</span>
+                        {
+                            {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">                                for (int j = 0; j &lt; internalSpaces; j++)</span>
+                                {
+<span class="nc" id="L164">                                    outputLocation.print(&quot; &quot;);</span>
+                                }
+                            }
+                        }
+                        else
+                        {
+<span class="nc" id="L170">                            outputLocation.println();</span>
+                        }
+
+<span class="nc" id="L173">                    }</span>
+                }
+<span class="nc" id="L175">            }</span>
+            //Printing moves on to next level.
+<span class="nc" id="L177">            levelList = (ArrayList&lt;BinaryTreeNode&gt;) TreeUtils.nextLevel(levelList);</span>
+        }
+<span class="nc" id="L179">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.4.201312101107</span></div></body></html>
