@@ -22,3 +22,6 @@ classes: $(CLASSES:.java=.class)
 clean:
 	$(RM) *.class
 	$(RM) *.out
+
+run: default
+	java BSTMain
